@@ -1,3 +1,26 @@
+import streamlit as st
+import pandas as pd
+import yfinance as yf
+import os
+import io
+import requests
+import time
+from datetime import datetime, date
+
+# Google Sheets API 連線套件
+import gspread
+from google.oauth2.service_account import Credentials
+
+from reportlab.lib.pagesizes import letter, landscape
+from reportlab.lib import colors
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.pdfgen import canvas
+
+st.set_page_config(page_title="台股家庭資產管理系統", layout="wide")
+
 # ----------------- 存取密碼保護機制 -----------------
 def check_password():
     """驗證通過回傳 True，否則顯示輸入框並阻斷後續程式"""
@@ -25,28 +48,7 @@ def check_password():
 # 若未通過驗證，立即終止後續所有持股與 Google Sheets 運算
 if not check_password():
     st.stop()
-import streamlit as st
-import pandas as pd
-import yfinance as yf
-import os
-import io
-import requests
-import time
-from datetime import datetime, date
 
-# Google Sheets API 連線套件
-import gspread
-from google.oauth2.service_account import Credentials
-
-from reportlab.lib.pagesizes import letter, landscape
-from reportlab.lib import colors
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.pdfgen import canvas
-
-st.set_page_config(page_title="台股家庭資產管理系統", layout="wide")
 
 # 1. 強制置頂樣式
 st.markdown("""
