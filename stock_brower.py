@@ -1,3 +1,30 @@
+# ----------------- 存取密碼保護機制 -----------------
+def check_password():
+    """驗證通過回傳 True，否則顯示輸入框並阻斷後續程式"""
+    if "authenticated" not in st.session_state:
+        st.session_state.authenticated = False
+
+    if st.session_state.authenticated:
+        return True
+
+    st.title("🔒 台股家庭資產管理系統")
+    st.caption("此為家庭私人資產管理平台，請輸入授權通行碼。")
+    
+    pwd_input = st.text_input("請輸入訪問密碼：", type="password", key="login_password_input")
+    
+    if st.button("確認解鎖", type="primary"):
+        expected_pwd = st.secrets.get("app_password", "123456")
+        if pwd_input == expected_pwd:
+            st.session_state.authenticated = True
+            st.rerun()
+        else:
+            st.error("❌ 密碼錯誤，拒絕存取！")
+            
+    return False
+
+# 若未通過驗證，立即終止後續所有持股與 Google Sheets 運算
+if not check_password():
+    st.stop()
 import streamlit as st
 import pandas as pd
 import yfinance as yf
