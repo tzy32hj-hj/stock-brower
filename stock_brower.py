@@ -1266,3 +1266,19 @@ with tab6:
                         st.success(f"已成功刪除券商：{del_target_b}")
                         time.sleep(1)
                         st.rerun()
+st.markdown("""
+<style>
+    /* 1. 隱藏右上角 GitHub 圖示與選單按鈕 */
+    .stAppDeployButton,
+    [data-testid="stToolbarActions"],
+    header[data-testid="stHeader"] {
+        display: none !important;
+    }
+
+    /* 2. 隱藏右下角 Streamlit 水印與狀態列 */
+    #MainMenu {visibility: hidden !important;}
+    footer {visibility: hidden !important;}
+    div[data-testid="stStatusWidget"] {display: none !important;}
+    .viewerBadge_container__r5tak {display: none !important;}
+</style>
+""", unsafe_allow_html=True)
